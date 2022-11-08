@@ -380,6 +380,8 @@ img {
   }
 }
 
+
+
 .about {
   @extend .container;
   display: grid;
@@ -471,4 +473,11 @@ img {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.notif {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
