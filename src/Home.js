@@ -1,44 +1,10 @@
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-
-let stripePromise;
-
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-  }
-
-  return stripePromise;
-};
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
-  const [stripeError, setStripeError] = useState(null);
-
-  const item = {
-    price: "price_1M1p6XJFnf0JNd4LFqNAwbvL",
-    quantity: 1,
-  };
-
-  const checkoutOptions = {
-    lineItems: [item],
-    mode: "payment",
-    successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cancel`,
-  };
-
-  const redirectToCheckout = async () => {
-    console.log("redirectToCheckout");
-
-    const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout(checkoutOptions);
-    console.log("Stripe checkout error", error);
-
-    if (error) setStripeError(error.message);
-  };
-
-  if (stripeError) alert(stripeError);
+  const navigate = useNavigate();
 
   const handleNext = () => {
     if (active === 2) {
@@ -147,7 +113,7 @@ function App() {
               with our collection and make your property a reflection of you and
               what you love.
             </p>
-            <a href="/#" rel="noopener noreferrer" className="slider__arrow-link" onClick={redirectToCheckout}>
+            <a href="/payment" rel="noopener noreferrer" className="slider__arrow-link" onClick={() => navigate("/payment")}>
               <span>shop now</span>
               <img
                 src="https://raw.githubusercontent.com/jarekTerejko/fem-challenges-solutions/8aedb521950e6df5c9d89b1ab463784486aca94a/room-homepage-master/images/icon-arrow.svg"
@@ -164,7 +130,7 @@ function App() {
               you using our store locator. Any questions? Don't hesitate to
               contact us today.
             </p>
-            <a href="/#" rel="noopener noreferrer" className="slider__arrow-link" onClick={redirectToCheckout}>
+            <a href="/payment" rel="noopener noreferrer" className="slider__arrow-link" onClick={() => navigate("/payment")}>
               <span>shop now</span>
               <img
                 src="https://raw.githubusercontent.com/jarekTerejko/fem-challenges-solutions/8aedb521950e6df5c9d89b1ab463784486aca94a/room-homepage-master/images/icon-arrow.svg"
@@ -181,7 +147,7 @@ function App() {
               three decades of experience in this industry, we understand what
               customers want for their home and office.
             </p>
-            <a href="/#" rel="noopener noreferrer" className="slider__arrow-link" onClick={redirectToCheckout}>
+            <a href="/payment" rel="noopener noreferrer" className="slider__arrow-link" onClick={() => navigate("/payment")}>
               <span>shop now</span>
               <img
                 src="https://raw.githubusercontent.com/jarekTerejko/fem-challenges-solutions/8aedb521950e6df5c9d89b1ab463784486aca94a/room-homepage-master/images/icon-arrow.svg"
